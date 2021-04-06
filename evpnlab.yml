@@ -1,0 +1,79 @@
+name: evpnlab
+
+topology:
+  kinds:
+  nodes:
+    leaf1:
+      kind: linux
+      image: alpine-netlab:latest
+    leaf2:
+      kind: linux
+      image: alpine-netlab:latest
+    leaf3:
+      kind: linux
+      image: alpine-netlab:latest
+    spline1:
+      kind: linux
+      image: alpine-netlab:latest
+    spline2:
+      kind: linux
+      image: alpine-netlab:latest
+    borderleaf:
+      kind: linux
+      image: alpine-netlab:latest
+    core:
+      kind: linux
+      image: alpine-netlab:latest
+    firewall:
+      kind: linux
+      image: alpine-netlab:latest
+    h11:
+      kind: linux
+      image: alpine-netlab:latest
+    h12:
+      kind: linux
+      image: alpine-netlab:latest
+    h13:
+      kind: linux
+      image: alpine-netlab:latest
+    h21:
+      kind: linux
+      image: alpine-netlab:latest
+    h22:
+      kind: linux
+      image: alpine-netlab:latest
+    h31:
+      kind: linux
+      image: alpine-netlab:latest
+    h0:
+      kind: linux
+      image: alpine-netlab:latest
+
+
+
+  links:
+   # Spline leaf links
+    - endpoints: ["leaf1:swp1","spline1:swp1"]
+    - endpoints: ["leaf1:swp2","spline2:swp1"]
+    - endpoints: ["leaf2:swp1","spline1:swp2"]
+    - endpoints: ["leaf2:swp2","spline2:swp2"]
+    - endpoints: ["leaf3:swp1","spline1:swp3"]
+    - endpoints: ["leaf3:swp2","spline2:swp3"]
+    - endpoints: ["borderleaf:swp1","spline1:swp4"]
+    - endpoints: ["borderleaf:swp2","spline2:swp4"]
+
+    # Core / Firewall / Borderleaf
+    - endpoints: ["core:swp1","borderleaf:swp3"]
+    - endpoints: ["firewall:swp1","borderleaf:swp4"]
+    - endpoints: ["core:swp2","firewall:swp2"]
+
+    # Host connections
+    - endpoints: ["h11:eth1","leaf1:eth1"]
+    - endpoints: ["h12:eth1","leaf2:eth1"]
+    - endpoints: ["h13:eth1","leaf3:eth1"]
+    - endpoints: ["h21:eth1","leaf1:eth2"]
+    - endpoints: ["h22:eth1","leaf3:eth2"]
+    - endpoints: ["h31:eth1","leaf3:eth3"]
+    - endpoints: ["h0:eth1","core:eth1"]
+
+

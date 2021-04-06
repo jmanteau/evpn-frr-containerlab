@@ -1,0 +1,6 @@
+FROM alpine:latest
+MAINTAINER Julien MANTEAU
+LABEL Name=evpnlab-host Version=1.0.0
+RUN apk update
+RUN apk add sudo
+RUN apk add nmap tshark tcpdump frr mtr iperf iperf3 htop bind-tools fping curl --no-cache && rm -f /var/cache/apk/*
