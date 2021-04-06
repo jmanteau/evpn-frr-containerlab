@@ -4,7 +4,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/debian10"
   config.vm.provider :libvirt do |domain|
-    domain.nested = true
     domain.memory = 8096
     domain.cpus = 2
     domain.nested = true
