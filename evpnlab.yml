@@ -5,49 +5,49 @@ topology:
   nodes:
     leaf1:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     leaf2:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     leaf3:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     spline1:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     spline2:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     borderleaf:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     core:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     firewall:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-net:latest
     h11:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h12:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h13:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h21:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h22:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h31:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
     h0:
       kind: linux
-      image: alpine-netlab:latest
+      image: evpnlab-host:latest
 
 
 
@@ -75,5 +75,6 @@ topology:
     - endpoints: ["h22:eth1","leaf3:eth2"]
     - endpoints: ["h31:eth1","leaf3:eth3"]
     - endpoints: ["h0:eth1","core:eth1"]
+
 
 
