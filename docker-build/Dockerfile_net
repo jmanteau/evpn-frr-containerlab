@@ -5,6 +5,8 @@ RUN apk update
 RUN apk add sudo
 RUN apk add nmap tshark tcpdump frr mtr iperf iperf3 htop bind-tools fping curl openssh bash tini --no-cache && rm -f /var/cache/apk/*
 COPY .bashrc /root/.bashrc
+COPY .inputrc /root/.inputrc
+RUN touch /etc/frr/vtysh.conf
 RUN sed -i s/bgpd=no/bgpd=yes/g /etc/frr/daemons
 COPY docker-start /usr/lib/frr/docker-start
 RUN chmod +x /usr/lib/frr/docker-start
