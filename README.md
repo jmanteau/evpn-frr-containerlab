@@ -18,7 +18,7 @@ Installation of [VirtualBox](https://www.virtualbox.org/wiki/Downloads), [Packer
 
 ### Building up
 
-If local Vagrant on Mac os :
+If local Vagrant on MacOS :
 
 ```
 vagrant up
@@ -39,7 +39,6 @@ docker build --rm -f Dockerfile_net -t evpnlab-net:latest .
 cd ..
 containerlab deploy --topo evpnlab.yml
 
-root@debian10:/home/vagrant/evpn-frr-containerlab# containerlab deploy --topo evpnlab.yml --reconfigure
 INFO[0000] Parsing & checking topology file: evpnlab.yml
 INFO[0000] Destroying container lab: evpnlab
 INFO[0001] Removed container: clab-evpnlab-leaf3
@@ -158,6 +157,19 @@ swp2            up      default
 containerlab destroy --topo
 ```
 
+```
+for vni in 10 20 30; do
+    # Create VXLAN interface
+    ip link add vxlan${vni} type vxlan
+    # Create companion bridge
+    brctl addbr br${vni}
+    brctl addif br${vni} vxlan${vni}
+    brctl stp br${vni} off
+    ip link set up dev br${vni}
+    ip link set up dev vxlan${vni}
+
+```
+
 
 
 
@@ -186,11 +198,11 @@ https://gitlab.com/cumulus-consulting/tools/topology_converter
 
 https://github.com/bobfraser1/packer-alpine
 
-https://ahmet.im/blog/minimal-init-process-for-containers/
-
 https://cumulusnetworks.com/blog/evpn-underlay-routing-protocol/
 
 https://learningnetwork.cisco.com/s/blogs/a0D3i000002eebCEAQ/vxlan-ebgp-evpn-the-incarnation-of-a-hybrid-guest-post
+
+https://learningnetwork.cisco.com/s/blogs/a0D3i000002eeaAEAQ/the-magic-of-superspines-and-rfc7938-with-overlays-guest-post
 
 https://netdevconf.info/2.2/slides/prabhu-linuxbridge-tutorial.pdf
 
@@ -211,3 +223,6 @@ https://github.com/FRRouting/frr/issues/5113
 https://icicimov.github.io/blog/virtualization/Overlay-SDN-with-VxLAN-BGP-EVPN-and-FRR/
 
 https://vincent.bernat.ch/fr/blog/2017-vxlan-bgp-evpn
+
+https://www.arista.com/assets/data/pdf/Whitepapers/Arista_Design_Guide_DCI_with_VXLAN.pdf
+
