@@ -5,8 +5,7 @@ set -e
 ##
 # For volume mounts...
 ##
-chown -R frr:frr /etc/frr || true
-/usr/lib/frr/frrinit.sh start
-
-# Sleep forever
-exec tail -f /dev/null
+chown -R frr:frr /etc/frr
+/etc/init.d/frr start
+/etc/init.d/ssh start
+exec sleep 10000d

@@ -14,6 +14,9 @@ clean:
 leaf1:
 	docker exec -it clab-evpnlab-leaf1 /bin/bash
 
+leaf2:
+	docker exec -it clab-evpnlab-leaf2 /bin/bash
+
 spline1:
 	docker exec -it clab-evpnlab-spline1 /bin/bash
 

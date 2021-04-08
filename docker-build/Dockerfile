@@ -10,7 +10,6 @@ RUN apt-get update -o Acquire::Max-FutureTime=86400
 RUN apt-get install -y  --no-install-recommends libpcre3-dev apt-transport-https ca-certificates curl wget logrotate libc-ares2 libjson-c3 vim procps libreadline7 gnupg2 lsb-release apt-utils 
 
 RUN apt-get install -y --no-install-recommends nmap tshark tcpdump mtr iperf iperf3 htop dnsutils fping curl  
-RUN apt-get install -y --no-install-recommends bridge-utils ifupdown
 
 
 
@@ -26,13 +25,8 @@ COPY .inputrc /root/.inputrc
 RUN sed -i s/bgpd=no/bgpd=yes/g /etc/frr/daemons
 
 RUN apt-get autoclean
-RUN mkdir -p /etc/network
-RUN touch /etc/network/interfaces
 
 COPY docker-start /usr/sbin/docker-start
-COPY id_rsa.pub /root/id_rsa.pub
-RUN mkdir -p /root/.ssh
-RUN cat /root/id_rsa.pub >> /root/.ssh/authorized_keys
 RUN chmod +x /usr/sbin/docker-start
 
 ENTRYPOINT ["/usr/sbin/docker-start"]
