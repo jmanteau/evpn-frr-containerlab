@@ -2,8 +2,12 @@ FROM alpine:latest
 MAINTAINER Julien MANTEAU
 LABEL Name=evpnlab-net Version=1.0.0
 RUN apk update
-RUN apk add sudo
-RUN apk add nmap tshark tcpdump frr mtr iperf iperf3 htop bind-tools fping curl openssh bash tini --no-cache && rm -f /var/cache/apk/*
+RUN apk add sudo bash
+RUN apk add tini
+RUN apk add nmap tshark tcpdump mtr iperf iperf3 htop bind-tools fping curl  
+RUN apk add frr frr-pythontools
+RUN apk add openssh
+RUN rm -f /var/cache/apk/*
 COPY .bashrc /root/.bashrc
 COPY .inputrc /root/.inputrc
 RUN touch /etc/frr/vtysh.conf
