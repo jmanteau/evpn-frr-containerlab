@@ -118,7 +118,7 @@ INFO[0011] Writing /etc/hosts file
 ```
 
 ```
-#  docker exec -it clab-evpnlab-leaf1 /bin/ash
+#  docker exec -it clab-evpnlab-leaf1 /bin/bash
 / # vtysh
 % Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
 
@@ -188,7 +188,26 @@ https://github.com/bobfraser1/packer-alpine
 
 https://ahmet.im/blog/minimal-init-process-for-containers/
 
+https://cumulusnetworks.com/blog/evpn-underlay-routing-protocol/
 
+https://learningnetwork.cisco.com/s/blogs/a0D3i000002eebCEAQ/vxlan-ebgp-evpn-the-incarnation-of-a-hybrid-guest-post
 
+https://netdevconf.info/2.2/slides/prabhu-linuxbridge-tutorial.pdf
 
+https://techbloc.net/archives/2449
 
+https://docs.frrouting.org/en/latest/basic.html
+
+https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/tree/master/roles
+
+https://metal.equinix.com/developers/docs/networking/route-bgp-with-frr/
+
+https://www.jasonvanpatten.com/2018/08/16/evpn-and-vxlan-on-cumulus/
+
+https://git.proxmox.com/?p=pve-docs.git;a=blob_plain;f=vxlan-and-evpn.adoc;hb=HEAD
+
+https://github.com/FRRouting/frr/issues/5113
+
+https://icicimov.github.io/blog/virtualization/Overlay-SDN-with-VxLAN-BGP-EVPN-and-FRR/
+
+https://vincent.bernat.ch/fr/blog/2017-vxlan-bgp-evpn
