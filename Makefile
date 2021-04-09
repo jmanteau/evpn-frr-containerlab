@@ -20,4 +20,9 @@ leaf2:
 spline1:
 	docker exec -it clab-evpnlab-spline1 /bin/bash
 
+h11:
+	docker exec -it clab-evpnlab-h11 /bin/bash
+
 all: images lab
+up: lab
+down: clean

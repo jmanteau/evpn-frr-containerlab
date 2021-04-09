@@ -23,5 +23,6 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install docker-ce docker-ce-cli containerd.io -y
     bash -c "$(curl -sL https://get-clab.srlinux.dev)" 
+    modprobe 8021q
   SHELL
 end
