@@ -198,9 +198,9 @@ https://gitlab.com/cumulus-consulting/tools/topology_converter
 
 https://github.com/bobfraser1/packer-alpine
 
-https://cumulusnetworks.com/blog/evpn-underlay-routing-protocol/
+https://cumulusnetworks.com/blog/evpn-underlay-routing-protocol/ -> 1 one AS per leaf
 
-https://learningnetwork.cisco.com/s/blogs/a0D3i000002eebCEAQ/vxlan-ebgp-evpn-the-incarnation-of-a-hybrid-guest-post
+https://learningnetwork.cisco.com/s/blogs/a0D3i000002eebCEAQ/vxlan-ebgp-evpn-the-incarnation-of-a-hybrid-guest-post -> Multi-AS vs. Dual-AS
 
 https://learningnetwork.cisco.com/s/blogs/a0D3i000002eeaAEAQ/the-magic-of-superspines-and-rfc7938-with-overlays-guest-post
 
