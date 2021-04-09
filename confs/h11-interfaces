@@ -1,0 +1,7 @@
+auto lo 
+iface lo inet loopback
+
+iface eth1 inet static
+    address 10.10.0.11
+    netmask 255.255.255.0
+    hwaddress ether AA:AA:AA:00:00:11

@@ -180,6 +180,8 @@ for vni in 10 20 30; do
 
 docker import cEOS-lab.tar.xz ceosimage:4.21.0F
 docker exec -it ceos1 Cli
+
+tshark -i swp1 -Y "bgp.type==2" -T fields -E quote=d -e ip.src -e ip.dst -e bgp.update.path_attribute.next_hop -e bgp.update.path_attribute.as_path_segment.as2 -e bgp.nlri_prefix
 ```
 
 ![img](../epvn-linux-lab/README.assets/3d.jpg)
@@ -190,7 +192,7 @@ docker exec -it ceos1 Cli
 
 [Iproute2-cheatsheet](docs/Iproute2-cheatsheet/README.md) (latest version [here](https://baturin.org/docs/iproute2/))
 
-
+[/etc/network/interfaces](docs/etc%20network%20interfaces.md)
 
 ## Done with the following ressources
 
