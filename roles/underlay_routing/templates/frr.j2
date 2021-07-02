@@ -1,0 +1,22 @@
+
+{% for l in interfaces|default([]) %}
+{% if interfaces[l]["interface_type"] == "ethernet" %}
+    {% if "spines" in group_names %}
+interface {{ l }}
+! no shutdown
+    ip ospf priority 255
+    {% elif "leafs" in group_names %}
+interface {{ l }}
+    ip ospf priority 2
+! no shutdown
+    {% endif %}
+{% endif %}
+{% endfor %}
+
+router ospf
+ ospf router-id {{ interfaces.loop0.ip_address.split('/')[0] }}
+ network 10.0.0.0/15 area 0.0.0.0
+ redistribute connected route-map LOOPBACK
+
+route-map LOOPBACK permit 10
+ match interface loop0

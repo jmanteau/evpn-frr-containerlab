@@ -1,3 +1,15 @@
 
-- name: Check Hostname
-  shell: hostname
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 1
+
+- name: Display all interfaces
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  vars:
+    msg: |
+        {% for iface in ansible_interfaces|sort %}
+            System interface {{ iface }}
+            {{ vars.ansible_facts[iface] | to_nice_json }}
+        {% endfor %}

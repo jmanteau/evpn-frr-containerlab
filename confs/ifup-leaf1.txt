@@ -1,0 +1,46 @@
+
+/sbin/ip link set dev lo up
+ 
+
+ip link add loop0 type dummy || true
+ 
+
+/sbin/ip link set dev loop0 up 2>/dev/null || true
+ip link set loop0 up
+ 
+
+
+/sbin/ip addr add 10.0.0.10/255.255.255.254 broadcast 255.255.255.255     dev swp1 label swp1
+/sbin/ip link set dev swp1   up
+
+
+/sbin/ip link set dev eth1 up 2>/dev/null || true
+ 
+
+ip link add name bridge type bridge
+ip link set bridge up
+ 
+
+/sbin/ip link set dev bridge up 2>/dev/null || true
+
+/sbin/ip addr add 10.10.0.1/255.255.255.0 broadcast 10.10.0.255           dev vlan10 label vlan10
+/sbin/ip link set dev vlan10  address AA:AA:AA:00:00:01 # must be same on each leaf up
+
+ip link set vlan10 up
+ 
+
+/sbin/ip addr add 10.20.0.1/255.255.255.0 broadcast 10.20.0.255 dev vlan20 label vlan20
+/sbin/ip link set dev vlan20  address BB:BB:BB:00:00:01 # must be same on each leaf up
+
+/sbin/ip addr add 10.30.0.1/255.255.255.0 broadcast 10.30.0.255           dev vlan30 label vlan30
+/sbin/ip link set dev vlan30  address CC:CC:CC:00:00:01 # must be same on each leaf up
+
+ip link set vlan30 up
+ 
+
+
+
+
+
+
+ 

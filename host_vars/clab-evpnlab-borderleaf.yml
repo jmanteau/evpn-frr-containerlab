@@ -1,0 +1,18 @@
+interfaces:
+  loop0:
+    ip_address: 10.1.0.4/32
+    interface_type: loopback
+  swp1:
+    ip_address: 10.0.0.40/31
+    interface_type: ethernet
+  swp2:
+    ip_address: 10.0.0.42/31
+    interface_type: ethernet
+  vxlan0:
+    ip_address: 10.2.0.4
+    vxlan_id: 1001
+    interface_type: vxlan
+bridge:
+  allowed_vlans:
+    - 10
+    - 20

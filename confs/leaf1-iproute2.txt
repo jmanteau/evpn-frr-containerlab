@@ -1,0 +1,93 @@
+
+# LEAF1
+
+
+# Loopback
+ip link add loop0 type dummy 
+ip link set loop0 up
+ip addr add 10.1.0.1/255.255.255.255  dev loop0
+
+
+
+# Setup Switch
+ip link add br0 type bridge
+ip link set br0 up
+ip link set br0 type bridge vlan_filtering 1
+
+
+# Link ethX to bridge
+ip link set eth1 master br0
+ip link set eth2 master br0
+
+
+# Allow VLAN on bridge	
+bridge vlan add dev br0 vid 10 tagged self
+bridge vlan add dev br0 vid 20 tagged self
+bridge vlan add dev br0 vid 30 tagged self
+
+
+# Create SVI
+ip link add link br0 name vlan10 type vlan id 10
+ip link set vlan10 up
+ip addr add 10.10.0.1/255.255.255.0  dev vlan10
+
+ip link add link br0 name vlan20 type vlan id 20
+ip link set vlan20 up
+ip addr add 10.20.0.1/255.255.255.0  dev vlan20
+
+
+
+# Interface Access Vlan
+bridge vlan add dev eth1 vid 10 pvid untagged master
+bridge vlan add dev eth2 vid 20 pvid untagged master
+
+
+# VXLAN
+ip link add vxlan0 type vxlan id 1001 local 10.1.0.1 dstport 4789  nolearning
+ip link set vxlan0 up
+ip link set vxlan0 master br0
+
+bridge vlan add dev vxlan0 vid 10 tagged master
+bridge vlan add dev vxlan0 vid 20 tagged master
+
+# LEAF2
+
+ip link add loop0 type dummy 
+ip link set loop0 up
+ip addr add 10.1.0.2/255.255.255.255  dev loop0
+
+
+# Setup Switch
+ip link add br0 type bridge
+ip link set br0 up
+ip link set br0 type bridge vlan_filtering 1
+
+# Link ethX to bridge
+ip link set eth1 master br0
+ip link set eth2 master br0
+
+# Allow VLAN on bridge	
+bridge vlan add dev br0 vid 10 tagged self
+
+# Create SVI
+ip link add link br0 name vlan10 type vlan id 10
+ip link set vlan10 up
+ip addr add 10.10.0.1/255.255.255.0  dev vlan10
+
+
+# Interface Access Vlan
+bridge vlan add dev eth1 vid 10 pvid untagged master
+
+
+
+
+
+# H11
+
+ip addr add 10.10.0.11/255.255.255.0  dev eth1
+ip route add 10.0.0.0/255.0.0.0 via 10.20.0.1 dev eth1
+
+# H21
+
+ip addr add 10.20.0.21/255.255.255.0  dev eth1
+ip route add 10.0.0.0/255.0.0.0 via 10.20.0.1 dev eth1

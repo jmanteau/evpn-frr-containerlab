@@ -1,0 +1,22 @@
+
+- name: Create EVPN Config
+  template:
+    src: frr.j2
+    dest: /tmp/frr_evpn.conf
+    owner: frr
+    group: frr
+  register: frr_evpn_config
+  when:     
+    - ('leafs' in group_names) or ('spines' in group_names)
+
+
+- name: Run EVPN FRR config
+  ansible.builtin.shell: |      
+      vtysh -f /tmp/frr_evpn.conf
+      vtysh -w
+      vtysh -b  
+  when: 
+    - frr_evpn_config.changed
+    - ('leafs' in group_names) or ('spines' in group_names)
+
+    

@@ -1,0 +1,22 @@
+router bgp {{ 65100 + interfaces.loop0.ip_address.split('/')[0].split(".")[3]|int }}
+ bgp router-id {{ interfaces.loop0.ip_address.split('/')[0] }}
+ bgp log-neighbor-changes
+ no bgp ebgp-requires-policy
+ bgp bestpath as-path multipath-relax
+ neighbor spines peer-group
+ neighbor spines remote-as external
+
+{% if "spines" in group_names %}
+ neighbor swp1 interface peer-group spines
+ neighbor swp2 interface peer-group spines
+ neighbor swp3 interface peer-group spines
+ neighbor swp4 interface peer-group spines
+{% elif "leafs" in group_names %}
+ neighbor swp1 interface peer-group spines
+ neighbor swp2 interface peer-group spines
+{% endif %}
+
+ address-family l2vpn evpn
+  advertise-all-vni
+  advertise-default-gw
+  neighbor spines activate

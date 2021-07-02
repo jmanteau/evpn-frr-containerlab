@@ -1,0 +1,40 @@
+interfaces:
+  loop0:
+    ip_address: 10.1.0.1/32
+    interface_type: loopback
+  eth1:
+    interface_type: ethernet
+    access_vlan: 10
+  eth2:
+    interface_type: ethernet
+    access_vlan: 20
+  swp1:
+    ip_address: 10.0.0.10/31
+    interface_type: ethernet
+  swp2:
+    ip_address: 10.0.0.12/31
+    interface_type: ethernet
+  vlan10:
+    ip_address: 10.10.0.1/24
+    vlan_id: 10
+    interface_type: svi
+  vlan20:
+    ip_address: 10.20.0.1/24
+    vlan_id: 20
+    interface_type: svi
+  vlan30:
+    ip_address: 10.30.0.1/24
+    vlan_id: 30
+    interface_type: svi
+  vxlan0:
+    ip_address: 10.2.0.1
+    vxlan_id: 1001
+    interface_type: vxlan
+bridge:
+  allowed_vlans:
+    - 10
+    - 20
+    - 30
+  linked_ethernet_intfs:
+    - eth1
+    - eth2

@@ -1,0 +1,18 @@
+interfaces:
+  physical:
+    swp1:
+      ip: 1.1.1.1/32
+  bridge:
+    vids: 
+      - 10
+      - 20
+      - 30
+    ports:
+      - eth1
+  virtual:
+    - vlan10:
+        type : vlan
+    - vxlan0:
+        type : vxlan
+    - loop0:
+        type: loopback

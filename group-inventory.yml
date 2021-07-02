@@ -1,0 +1,29 @@
+all:
+  children:
+    srvs:
+      hosts:
+        clab-evpnlab-h0:
+        clab-evpnlab-h11:
+        clab-evpnlab-h12:
+        clab-evpnlab-h13:
+        clab-evpnlab-h14:
+        clab-evpnlab-h21:
+        clab-evpnlab-h22:
+        clab-evpnlab-h31:
+    nets:
+      children:
+        spines:
+          hosts:
+            clab-evpnlab-spine1:
+            clab-evpnlab-spine2:
+        leafs:
+          hosts:
+            clab-evpnlab-borderleaf:
+            clab-evpnlab-leaf1:
+            clab-evpnlab-leaf2:
+            clab-evpnlab-leaf3:
+        others:
+          hosts:
+            clab-evpnlab-core:
+            clab-evpnlab-firewall:
+

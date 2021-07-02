@@ -12,10 +12,10 @@ topology:
     leaf3:
       kind: linux
       image: evpnlab-net:latest
-    spline1:
+    spine1:
       kind: linux
       image: evpnlab-net:latest
-    spline2:
+    spine2:
       kind: linux
       image: evpnlab-net:latest
     borderleaf:
@@ -36,6 +36,9 @@ topology:
     h13:
       kind: linux
       image: evpnlab-host:latest
+    h14:
+      kind: linux
+      image: evpnlab-host:latest
     h21:
       kind: linux
       image: evpnlab-host:latest
@@ -52,15 +55,15 @@ topology:
 
 
   links:
-   # Spline leaf links
-    - endpoints: ["leaf1:swp1","spline1:swp1"]
-    - endpoints: ["leaf1:swp2","spline2:swp1"]
-    - endpoints: ["leaf2:swp1","spline1:swp2"]
-    - endpoints: ["leaf2:swp2","spline2:swp2"]
-    - endpoints: ["leaf3:swp1","spline1:swp3"]
-    - endpoints: ["leaf3:swp2","spline2:swp3"]
-    - endpoints: ["borderleaf:swp1","spline1:swp4"]
-    - endpoints: ["borderleaf:swp2","spline2:swp4"]
+   # spine leaf links
+    - endpoints: ["leaf1:swp1","spine1:swp1"]
+    - endpoints: ["leaf1:swp2","spine2:swp1"]
+    - endpoints: ["leaf2:swp1","spine1:swp2"]
+    - endpoints: ["leaf2:swp2","spine2:swp2"]
+    - endpoints: ["leaf3:swp1","spine1:swp3"]
+    - endpoints: ["leaf3:swp2","spine2:swp3"]
+    - endpoints: ["borderleaf:swp1","spine1:swp4"]
+    - endpoints: ["borderleaf:swp2","spine2:swp4"]
 
     # Core / Firewall / Borderleaf
     - endpoints: ["core:swp1","borderleaf:swp3"]
@@ -70,7 +73,8 @@ topology:
     # Host connections
     - endpoints: ["h11:eth1","leaf1:eth1"]
     - endpoints: ["h12:eth1","leaf2:eth1"]
-    - endpoints: ["h13:eth1","leaf3:eth1"]
+    - endpoints: ["h13:eth1","leaf2:eth2"]
+    - endpoints: ["h14:eth1","leaf3:eth1"]  
     - endpoints: ["h21:eth1","leaf1:eth2"]
     - endpoints: ["h22:eth1","leaf3:eth2"]
     - endpoints: ["h31:eth1","leaf3:eth3"]

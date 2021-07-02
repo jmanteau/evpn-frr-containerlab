@@ -1,0 +1,5 @@
+interfaces:
+  eth1:
+    ip_address: 10.20.0.21/24
+    interface_type: ethernet
+    gw: 10.20.0.1

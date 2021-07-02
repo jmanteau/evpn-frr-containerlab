@@ -196,6 +196,8 @@ tshark -i swp1 -Y "bgp.type==2" -T fields -E quote=d -e ip.src -e ip.dst -e bgp.
 
 ## Done with the following ressources
 
+https://doc.ycharbi.fr/index.php/Vlan_-_linux
+
 https://gitlab.com/cumulus-consulting/tools/topology_converter
 
 https://github.com/bobfraser1/packer-alpine
@@ -227,4 +229,6 @@ https://icicimov.github.io/blog/virtualization/Overlay-SDN-with-VxLAN-BGP-EVPN-a
 https://vincent.bernat.ch/fr/blog/2017-vxlan-bgp-evpn
 
 https://www.arista.com/assets/data/pdf/Whitepapers/Arista_Design_Guide_DCI_with_VXLAN.pdf
+
+https://blog.wescale.fr/2018/02/15/les-reseaux-doverlay-principes-et-fonctionnement/
 

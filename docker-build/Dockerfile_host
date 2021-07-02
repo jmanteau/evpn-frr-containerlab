@@ -1,6 +1,6 @@
 FROM debian:stable
 MAINTAINER Julien MANTEAU
-LABEL Name=evpnlab-host Version=1.0.0
+LABEL Name=evpnlab-host Version=1.0.5
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
@@ -10,11 +10,10 @@ RUN apt-get update
 
 
 RUN apt-get install -y --no-install-recommends nmap tshark tcpdump mtr iperf iperf3 htop dnsutils fping curl vim python-pip
-RUN apt-get install -y --no-install-recommends bridge-utils iproute2 ifupdown vlan
+RUN apt-get install -y --no-install-recommends bridge-utils iproute2 ifupdown vlan 
+# RUN apt-get install -y --no-install-recommends network-manager
 
 RUN apt-get install -y --no-install-recommends openssh-server
-
-COPY .inputrc /root/.inputrc
 
 RUN apt-get autoclean
 RUN mkdir -p /etc/network
@@ -25,8 +24,6 @@ RUN mkdir -p /root/.ssh
 RUN cat /root/id_rsa.pub >> /root/.ssh/authorized_keys
 
 COPY docker-start.host /usr/sbin/docker-start
-
 RUN chmod +x /usr/sbin/docker-start
-
 ENTRYPOINT ["/usr/sbin/docker-start"]
 

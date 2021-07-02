@@ -1,0 +1,27 @@
+- name: Add route to 10/8 on hosts 
+  ansible.builtin.shell: |      
+    ip route replace 10.0.0.0/255.0.0.0 via {{ interfaces[item].gw }} dev {{ item }}
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - ('srvs' in group_names)
+
+- name: Create underlay Config
+  template:
+    src: frr.j2
+    dest: /tmp/frr_underlay.conf
+    owner: frr
+    group: frr
+  register: frr_underlay_config
+  when:     
+    - ('leafs' in group_names) or ('spines' in group_names)
+
+
+- name: Run underlay FRR config
+  ansible.builtin.shell: |      
+      vtysh -f /tmp/frr_underlay.conf
+      vtysh -w
+      vtysh -b  
+  when: 
+    - frr_underlay_config.changed
+    - ('leafs' in group_names) or ('spines' in group_names)
+

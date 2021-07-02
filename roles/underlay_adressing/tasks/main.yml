@@ -1,0 +1,89 @@
+---
+
+# - name: Debug
+#   ansible.builtin.debug:
+#     msg: "{{ ansible_facts[item] }}"
+#   with_items: "{{ interfaces.keys() | list }}"
+#   when:
+#     - ansible_facts[item] is not defined
+    
+- name: Add Loopback
+  ansible.builtin.shell: |      
+    ip link add loop0 type dummy
+    ip link set loop0 up
+    ip address add {{ interfaces[item].ip_address }} dev {{ item }} 
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - ansible_facts[item] is not defined
+    - interfaces[item].interface_type == 'loopback'
+    - ('leafs' in group_names) or ('spines' in group_names)
+
+
+- name: Setup Bridge
+  ansible.builtin.shell: |      
+    ip link add br0 type bridge
+    ip link set br0 up
+    ip link set br0 type bridge vlan_filtering 1
+  when:
+    - ('leafs' in group_names)
+
+
+- name: Allowed VLANs on Bridge
+  ansible.builtin.shell: |      
+    bridge vlan add dev br0 vid {{item}} tagged self
+  with_items: "{{ bridge.allowed_vlans }}"
+  when:
+    - ('leafs' in group_names)
+
+- name: Configure Access VLAN for ethernet interfaces with access_vlan to Bridge
+  ansible.builtin.shell: |      
+    ip link set {{ item }} master br0
+    bridge vlan add dev {{ item }} vid {{ interfaces[item].access_vlan  }} pvid untagged master
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - ('leafs' in group_names)
+    - interfaces[item].interface_type == 'ethernet'
+    - interfaces[item].access_vlan is defined
+
+
+- name: Configure ethernet interfaces with ip_address
+  ansible.builtin.shell: |      
+    ip address add {{ interfaces[item].ip_address }} dev {{ item }} 
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - interfaces[item].interface_type == 'ethernet'
+ #   - ansible_facts|selectattr(item.ipv4.address, "defined")|list|length >0
+    - interfaces[item].ip_address is defined
+
+
+
+- name: Add SVIs
+  ansible.builtin.shell: |      
+    ip link add link br0 name {{ item }} type vlan id {{ interfaces[item].vlan_id }}
+    ip link set {{ item }} up
+    ip addr add {{ interfaces[item].ip_address }} dev {{ item }}
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - ansible_facts[item] is not defined
+    - interfaces[item].interface_type == 'svi'
+    - ('leafs' in group_names)
+
+
+- name: Add VNI
+  ansible.builtin.shell: |      
+    ip link add {{ item }}  type vxlan id {{ interfaces[item].vxlan_id }} local {{ interfaces[item].ip_address }} dstport 4789  nolearning
+    ip link set {{ item }} up
+    ip link set {{ item }} master br0
+  with_items: "{{ interfaces.keys() | list }}"
+  when:
+    - ansible_facts[item] is not defined
+    - interfaces[item].interface_type == 'vxlan'
+    - ('leafs' in group_names)
+
+- name: Allowed VLANs on VNI
+  ansible.builtin.shell: |      
+    bridge vlan add dev vxlan0 vid {{item}} tagged master
+  with_items: "{{ bridge.allowed_vlans }}"
+  when:
+    - ('leafs' in group_names)
+
